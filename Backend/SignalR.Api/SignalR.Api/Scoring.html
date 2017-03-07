@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+<script src="Scripts/jquery-1.6.4.js"></script>
+<script src="Scripts/jquery.signalR-2.2.1.js"></script>
+<script type="text/javascript">
+    $(function() {
+        var connection = $.hubConnection();
+        var hub = connection.createHubProxy("scoring");
+        hub.on("onGetScores",
+            function(scores) {
+                $("#" + scores.Id).text(scores.ScoreText);
+            });
+        connection.start(function () {
+            hub.invoke("getScores", 10);
+            $("loan").text("Loading scores...");
+        });
+    });
+</script>
+<div id="results">
+    <div class="loan" id="1"></div>
+    <div class="loan" id="2"></div>
+    <div class="loan" id="3"></div>
+    <div class="loan" id="4"></div>
+    <div class="loan" id="5"></div>
+    <div class="loan" id="6"></div>
+    <div class="loan" id="7"></div>
+    <div class="loan" id="8"></div>
+    <div class="loan" id="9"></div>
+    <div class="loan" id="10"></div>
+</div>
+</body>
+</html>
